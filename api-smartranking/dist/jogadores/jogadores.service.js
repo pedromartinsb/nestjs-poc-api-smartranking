@@ -22,37 +22,40 @@ let JogadoresService = JogadoresService_1 = class JogadoresService {
         this.jogadorModel = jogadorModel;
         this.logger = new common_1.Logger(JogadoresService_1.name);
     }
-    async criarAtualizarJogador(criarJogadorDto) {
+    async criarJogador(criarJogadorDto) {
         const { email } = criarJogadorDto;
         const jogadorEncontrado = await this.jogadorModel.findOne({ email }).exec();
         if (jogadorEncontrado) {
-            await this.atualizar(criarJogadorDto);
+            throw new common_1.BadRequestException(`Jogador com o email ${email} já cadastrado`);
         }
-        else {
-            await this.criar(criarJogadorDto);
+        const jogadorCriado = new this.jogadorModel(criarJogadorDto);
+        return jogadorCriado.save();
+    }
+    async atualizarJogador(_id, atualizarJogadorDto) {
+        const jogadorEncontrado = await this.jogadorModel.findOne({ _id }).exec();
+        if (!jogadorEncontrado) {
+            throw new common_1.BadRequestException(`Jogador com id ${_id} não encontrado`);
         }
+        await this.jogadorModel
+            .findOneAndUpdate({ _id }, { $set: atualizarJogadorDto })
+            .exec();
     }
     async consultarJogadores() {
         return await this.jogadorModel.find().exec();
     }
-    async consultarJogadorPeloEmail(email) {
-        const jogadorEncontrado = await this.jogadorModel.findOne({ email }).exec();
+    async consultarJogadorPorId(_id) {
+        const jogadorEncontrado = await this.jogadorModel.findOne({ _id }).exec();
         if (!jogadorEncontrado) {
-            throw new common_1.NotFoundException(`Jogador com email ${email} não encontrado`);
+            throw new common_1.NotFoundException(`Jogador com id ${_id} não encontrado`);
         }
         return jogadorEncontrado;
     }
-    async deletarJogador(email) {
-        return await this.jogadorModel.remove(email).exec();
-    }
-    async atualizar(criarJogadorDto) {
-        return await this.jogadorModel
-            .findOneAndUpdate({ email: criarJogadorDto.email }, { $set: criarJogadorDto })
-            .exec();
-    }
-    async criar(criarJogadorDto) {
-        const jogadorCriado = new this.jogadorModel(criarJogadorDto);
-        return jogadorCriado.save();
+    async deletarJogador(_id) {
+        const jogadorEncontrado = await this.jogadorModel.findOne({ _id }).exec();
+        if (!jogadorEncontrado) {
+            throw new common_1.NotFoundException(`Jogador com id ${_id} não encontrado`);
+        }
+        return await this.jogadorModel.deleteOne({ _id }).exec();
     }
 };
 JogadoresService = JogadoresService_1 = __decorate([

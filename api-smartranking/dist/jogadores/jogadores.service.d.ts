@@ -1,14 +1,14 @@
 import { CriarJogadorDto } from './dtos/criar-jogador.dto';
 import { Jogador } from './interfaces/jogador.interface';
 import { Model } from 'mongoose';
+import { AtualizarJogadorDto } from './dtos/atualizar-jogador.dto';
 export declare class JogadoresService {
     private readonly jogadorModel;
     private readonly logger;
     constructor(jogadorModel: Model<Jogador>);
-    criarAtualizarJogador(criarJogadorDto: CriarJogadorDto): Promise<void>;
+    criarJogador(criarJogadorDto: CriarJogadorDto): Promise<Jogador>;
+    atualizarJogador(_id: string, atualizarJogadorDto: AtualizarJogadorDto): Promise<void>;
     consultarJogadores(): Promise<Jogador[]>;
-    consultarJogadorPeloEmail(email: string): Promise<Jogador>;
-    deletarJogador(email: string): Promise<any>;
-    private atualizar;
-    private criar;
+    consultarJogadorPorId(_id: string): Promise<Jogador>;
+    deletarJogador(_id: string): Promise<any>;
 }

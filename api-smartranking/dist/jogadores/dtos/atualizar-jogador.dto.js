@@ -9,21 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CriarJogadorDto = void 0;
+exports.AtualizarJogadorDto = void 0;
 const class_validator_1 = require("class-validator");
-class CriarJogadorDto {
+class AtualizarJogadorDto {
 }
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CriarJogadorDto.prototype, "telefoneCelular", void 0);
-__decorate([
-    (0, class_validator_1.IsEmail)(),
-    __metadata("design:type", String)
-], CriarJogadorDto.prototype, "email", void 0);
+], AtualizarJogadorDto.prototype, "telefoneCelular", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CriarJogadorDto.prototype, "nome", void 0);
-exports.CriarJogadorDto = CriarJogadorDto;
-//# sourceMappingURL=criar-jogador.dto.js.map
+], AtualizarJogadorDto.prototype, "nome", void 0);
+exports.AtualizarJogadorDto = AtualizarJogadorDto;
+//# sourceMappingURL=atualizar-jogador.dto.js.map
